@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class CardPokemon extends StatefulWidget {
-  _CardPokemonState createState() => _CardPokemonState();
+class PokeCard extends StatefulWidget {
+  const PokeCard({super.key});
+
+  @override
+  State<PokeCard> createState() => _PokeCardState();
 }
 
-class _CardPokemonState extends State<CardPokemon> {
+class _PokeCardState extends State<PokeCard> {
   var datas;
   var pokemon;
 
