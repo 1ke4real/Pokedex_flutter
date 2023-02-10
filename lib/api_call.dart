@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:pokedex/details_page.dart';
+
 class PokeCard extends StatefulWidget {
   const PokeCard({super.key});
 
@@ -32,44 +34,33 @@ class _PokeCardState extends State<PokeCard> {
     var stats;
     return datas == null
         ? Center(child: CircularProgressIndicator())
-        : ListView(
-            children: [
-              Column(
-                children: <Widget>[
-                  for (var data in datas)
-                    Card(
-                        child: SizedBox(
-                      width: 300,
-                      height: 230,
-                      child: Center(
-                        child: Column(children: [
-                          Image.network(
-                            data['image'],
-                            height: 50,
-                            width: 300,
-                          ),
-                          Text(
-                            data['name'],
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                              "Id du pokedex :" + data['pokedexId'].toString()),
-                          Text("Ses Stats"),
-                          Text("Hp :" + data["stats"]['HP'].toString()),
-                          Text("Attack :" + data["stats"]['attack'].toString()),
-                          Text("Defense :" +
-                              data["stats"]['defense'].toString()),
-                          Text("Attaque Spécial :" +
-                              data["stats"]['special_attack'].toString()),
-                          Text("Défence Spéciale :" +
-                              data["stats"]['special_defense'].toString()),
-                          Text("Vitesse :" + data["stats"]['speed'].toString())
-                        ]),
-                      ),
-                    ))
-                ],
-              )
-            ],
+        : GridView.builder(
+            itemCount: pokemon.length,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute<void>(
+                        builder: (BuildContext context) {
+                      return Details(
+                        name: pokemon[index]['name'],
+                        image: pokemon[index]['image'],
+                        sprite: pokemon[index]['sprite'],
+                      );
+                    }));
+                  },
+                  child: Column(children: [
+                    Text(pokemon[index]['id'].toString()),
+                    Image.network(
+                      pokemon[index]['image'],
+                      height: 50,
+                    ),
+                    Text(pokemon[index]['name'])
+                  ]));
+            },
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4, mainAxisSpacing: 10, crossAxisSpacing: 10),
+            padding: const EdgeInsets.all(10),
+            shrinkWrap: true,
           );
   }
 }
