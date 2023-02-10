@@ -49,10 +49,15 @@ class _PokeCardState extends State<PokeCard> {
                     }));
                   },
                   child: Column(children: [
-                    Text(pokemon[index]['id'].toString()),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text("#" + pokemon[index]['id'].toString()),
+                      ],
+                    ),
                     Image.network(
                       pokemon[index]['image'],
-                      height: 50,
+                      height: 40,
                     ),
                     Text(pokemon[index]['name'])
                   ]));
